@@ -13,7 +13,7 @@
 #include "proc_parse.h"
 
 #define PORT 2000
-#define MAX_CLIENTS 100
+#define MAX_CLIENTS 1000
 #define BUFFER_SIZE 1024
 
 int DEBUG_MODE = 1;
@@ -118,7 +118,7 @@ int Send(char *message, int socketFD) {
 void SelectHandler(struct AppInformation *server) {
     int new_socket, client_sockets[MAX_CLIENTS], max_sd, sd;
     fd_set readfds;
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFFER_SIZE] = {0};
 
     // Initialize client sockets
     for (int i = 0; i < MAX_CLIENTS; i++) {
@@ -195,7 +195,7 @@ void SelectHandler(struct AppInformation *server) {
                     // Echo back the message to the client
                     printf("Received: %s\n", buffer);
 
-                    char message[1024];
+                    char message[1024] = {0};
                     get_proc_details_string(message);
                     Send(message, sd);
                     close(sd); // Close socket after sending message

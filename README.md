@@ -1,3 +1,11 @@
+# CN PA-02 2024
+**Arjun Tandon (2022095)** | **Arav Amawate (22091)**
+
+*Disclaimer : Here the execution time of the client is used as the execution time of the server because the server is based on SIGINT action and includes appropriate handler for the same as well.
+Whereas client starts after the server is started and listening, and sends a specified number of requests to the server, receives a response from the server (the proc data) in this case,
+and exits instantly upon receving it. So the execution time of the client has to be taken in consideration while comparing corressponding TCP clients (multi-threaded, single-threaded, using-select),
+as their execution time has human error of manually using SIGINT to end the program.*
+
 # Concurrent (Multithreaded) TCP-Server and Client (n = 500)
 
 ```bash

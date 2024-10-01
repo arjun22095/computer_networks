@@ -1,4 +1,3 @@
----
 # Concurrent (Multithreaded) TCP-Server and Client (n = 500)
 
 ```bash

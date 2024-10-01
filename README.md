@@ -1,42 +1,4 @@
-# Concurrent (Multithreaded) TCP-Server and Client (n = 1000)
-```bash
- Performance counter stats for 'taskset -c 3-5 ./client 1000':
-
-      61,82,74,775      cycles                                                      
-      31,02,76,162      instructions              #    0.50  insn per cycle         
-       4,70,23,528      cache-references                                            
-       1,33,43,841      cache-misses              #   28.377 % of all cache refs    
-             5,412      context-switches                                            
-                 0      major-faults                                                
-             2,385      minor-faults                                                
-       7,56,21,131      branches                                                    
-
-     112.360075971 seconds time elapsed
-
-       0.009015000 seconds user
-       0.169040000 seconds sys
-
-```
-
-```bash
- Performance counter stats for 'taskset -c 0-3 ./server m':
-
-   18,59,16,79,277      cycles                                                      
-   17,81,73,61,593      instructions              #    0.96  insn per cycle         
-    1,62,77,05,744      cache-references                                            
-      11,01,05,305      cache-misses              #    6.764 % of all cache refs    
-             3,995      context-switches                                            
-                 0      major-faults                                                
-             4,424      minor-faults                                                
-    4,09,84,43,830      branches                                                    
-
-     113.530609496 seconds time elapsed
-
-       0.556886000 seconds user
-       3.609295000 seconds sys
-
-```
-
+---
 # Concurrent (Multithreaded) TCP-Server and Client (n = 500)
 
 ```bash
@@ -193,47 +155,6 @@
 ```
 
 ---
-
-# Single Threaded TCP-Server and Multithreaded Client (n = 1000)
-
-```bash
- Performance counter stats for 'taskset -c 3-5 ./client 1000':
-
-      56,10,51,268      cycles                                                      
-      29,08,91,987      instructions              #    0.52  insn per cycle         
-       4,26,99,955      cache-references                                            
-       1,10,62,897      cache-misses              #   25.908 % of all cache refs    
-             6,127      context-switches                                            
-                 0      major-faults                                                
-             2,395      minor-faults                                                
-       7,12,89,940      branches                                                    
-
-     108.170299350 seconds time elapsed
-
-       0.020979000 seconds user
-       0.152284000 seconds sys
-
-```
-
-```bash
- Performance counter stats for 'taskset -c 0 ./server s':
-
-   12,45,88,94,652      cycles                                                      
-   12,45,18,53,148      instructions              #    1.00  insn per cycle         
-    1,09,33,54,761      cache-references                                            
-       5,95,85,981      cache-misses              #    5.450 % of all cache refs    
-               153      context-switches                                            
-                 0      major-faults                                                
-               132      minor-faults                                                
-    2,85,74,43,466      branches                                                    
-
-     111.604092426 seconds time elapsed
-
-       0.357567000 seconds user
-       2.434672000 seconds sys
-
-```
-
 # Single Threaded TCP-Server and Multithreaded Client (n = 500)
 ```bash
  Performance counter stats for 'taskset -c 3-5 ./client 500':
@@ -347,47 +268,8 @@
        0.012473000 seconds user
        0.037188000 seconds sys
 ```
-
 ---
-# TCP client-server using “select” (n = 1000)
-
-```bash
- Performance counter stats for 'taskset -c 3-5 ./client 1000':
-
-      57,77,35,330      cycles                                                      
-      29,77,86,794      instructions              #    0.52  insn per cycle         
-       4,47,71,283      cache-references                                            
-       1,20,82,835      cache-misses              #   26.988 % of all cache refs    
-             6,276      context-switches                                            
-                 0      major-faults                                                
-             2,382      minor-faults                                                
-       7,29,37,982      branches                                                    
-
-     118.680815921 seconds time elapsed
-
-       0.008450000 seconds user
-       0.163251000 seconds sys
-```
-
-```bash
- Performance counter stats for 'taskset -c 0-2 ./server':
-
-   13,09,53,90,673      cycles                                                      
-   13,08,88,96,473      instructions              #    1.00  insn per cycle         
-    1,11,37,36,924      cache-references                                            
-       6,20,57,857      cache-misses              #    5.572 % of all cache refs    
-               171      context-switches                                            
-                 0      major-faults                                                
-               134      minor-faults                                                
-    3,00,24,95,195      branches                                                    
-
-     119.579644057 seconds time elapsed
-
-       0.434880000 seconds user
-       2.500560000 seconds sys
-```
-
-# n = 500
+# TCP client-server using “select” (n = 500)
 ```bash
  Performance counter stats for 'taskset -c 3-5 ./client 500':
 
@@ -424,7 +306,7 @@
        1.657037000 seconds sys
 ```
 
-# n = 100
+# TCP client-server using “select” (n = 100)
 
 ```bash
  Performance counter stats for 'taskset -c 3-5 ./client 100':
@@ -462,7 +344,7 @@
        0.359666000 seconds sys
 ```
 
-# n = 10
+# TCP client-server using “select” (n = 10)
 ```bash
  Performance counter stats for 'taskset -c 3-5 ./client 10':
 
@@ -498,5 +380,41 @@
        0.004467000 seconds user
        0.035739000 seconds sys
 ```
----
 
+# TCP client-server using “select” (n = 2)
+
+```bash
+ Performance counter stats for 'taskset -c 3-5 ./client 2':
+
+         43,37,846      cycles                                                      
+         27,39,809      instructions              #    0.63  insn per cycle         
+          3,02,002      cache-references                                            
+          1,15,377      cache-misses              #   38.204 % of all cache refs    
+                 7      context-switches                                            
+                 0      major-faults                                                
+               135      minor-faults                                                
+          6,33,672      branches                                                    
+
+       0.013384890 seconds time elapsed
+
+       0.001611000 seconds user
+       0.000000000 seconds sys
+```
+
+```bash
+ Performance counter stats for 'taskset -c 0-2 ./server':
+
+       4,09,07,776      cycles                                                      
+       3,70,26,166      instructions              #    0.91  insn per cycle         
+         32,44,820      cache-references                                            
+          2,22,997      cache-misses              #    6.872 % of all cache refs    
+                 2      context-switches                                            
+                 0      major-faults                                                
+               131      minor-faults                                                
+         84,96,649      branches                                                    
+
+       1.057495326 seconds time elapsed
+
+       0.000000000 seconds user
+       0.013611000 seconds sys
+```

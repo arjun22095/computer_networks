@@ -1,13 +1,43 @@
 # CN PA-02 2024
 **Arjun Tandon (2022095)** | **Arav Amawate (22091)**
-
+---
 *Disclaimer : Here the execution time of the client is used as the execution time of the server because the server is based on SIGINT action and includes appropriate handler for the same as well.
 Whereas client starts after the server is started and listening, and sends a specified number of requests to the server, receives a response from the server (the proc data) in this case,
 and exits instantly upon receving it. So the execution time of the client has to be taken in consideration while comparing corressponding TCP clients (multi-threaded, single-threaded, using-select),
 as their execution time has human error of manually using SIGINT to end the program.*
+---
+# Report
 
+We discuss the stats we measured
+
+# Cycles : 
+**General Trend** : Concurrent > Select > Single-Threaded
+Even though select also uses a single thread, it is able to outperform the vanilla Single-Threaded server because the `select` function doesn't block and also doesn't have the overhead that comes due to `multithreading`. It sits in the middle of concurrent server and single-threaded server despite using the same resources as a single-threaded server, all thanks to it's non-blocking behaviour.
+
+# IPC (Instructions/Cycle): 
+**General Trend** : Single-Threaded ≈ Select > Concurrent
+Concurrent client gets a higher IPC when the number of clients are large, that is when it is able to take advantage of the multithreading capabilities provided by `pthread` and the multi-threading benefits overpower the overheads that are incurred while multi-threading.
+
+# Cache References
+**General Trend** : Concurrent > Single-threaded > Select
+In concurrent programs, multiple threads operate simultaneously and often the same data is being processed in parallel, which increases the frequency of data fetch from CPU cache. Select also processes one socket at time but continuously does polling, meaning that it continuously checks a set of sockets to determine if they are ready for reading, writing, or have encountered errors which causes a lot of cache requests.
+
+# Cache Misses
+**General Trend** : Concurrent > Single-Threaded ≈ Select
+As the number of cache references are high for multi-threaded server as we discussed above, it also causes more frequent eviction of the cache blocks.
+
+# Context Switches
+**General Trend** : Concurrent > Single-Threaded > Select
+Concurrent server creates a new thread for every client request and for a large amount of client requests, the number of threads created are high as well, so since the number of threads are high, the CPU scheduler will make all of them run and give us the feeling as if they are running concurrently (similar to what we study in OS, round-robin or other scheduling policies) which are based on the principle and queuing the tasks (generally processes but threads in this case), letting them loading them (context switch), run for a time-slice (or CPU burst) and evicting them and then context switching to another thread. So the number of context switches are extremely high in case of concurrent servers. They are much lower for single-threaded servers but even lower for select based servers because select based servers are non-blocking whereas single-threaded servers use the blocking call which causes the CPU to context switch to another task. 
+
+# Execution Time
+**General Trend** : Single-Threaded > Select > Concurrent
+Parallelisation which is done by the concurrent TCP server does come at the cost of a lot of overheads (context switching and cache misses) but is able to utilise much more CPU resources than it's single-threaded counterparts like select-based server and the single-threaded server. The select-based server lies almost in the middle of single-threaded and concurrent servers because of non-blocking and being able to handle clients sequentially
+
+So for pure performance, multi-threading is the way to go for higher number of clients. However select offers a good compromise by using lesser resources (only a single thread, lesser overheads) than the concurrent server and still yielding a much better performance than the single-threaded server.
+
+---
 # Concurrent (Multithreaded) TCP-Server and Client (n = 500)
-
 ```bash
  Performance counter stats for 'taskset -c 3-5 ./client 500':
 
